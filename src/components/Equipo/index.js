@@ -1,13 +1,35 @@
-import React from 'react'
-import "./Equipo.css"
+import React from "react";
+import "./Equipo.css";
+import Colaborador from "../Colaborador";
 
 const Equipo = (props) => {
-    return (
-        <section className="equipo">
-            <h3>{props.equipo} </h3>
-            <div className = "colaboradores">  </div>
-        </section>
-    )
-}
+  //Destructuracion
 
-export default Equipo
+  const { colorPrimario, colorSecundario, titulo } = props.datos;
+  const { colaboradores, eliminarColaborador } = props;
+  const obj = { backgroundColor: colorSecundario };
+  const estiloTitulo = { borderColor: colorPrimario };
+
+  return (
+    <>
+      {" "}
+      {colaboradores.length > 0 && (
+        <section className="equipo" style={obj}>
+          <h3 style={estiloTitulo}>Equipo: {titulo}</h3>
+          <div className="colaboradores">
+            {colaboradores.map((colaborador, index) => (
+              <Colaborador
+                datos={colaborador}
+                key={index}
+                colorPrimario={colorPrimario}
+                eliminarColaborador ={eliminarColaborador}
+              />
+            ))}
+          </div>
+        </section>
+      )}{" "}
+    </>
+  );
+};
+
+export default Equipo;
