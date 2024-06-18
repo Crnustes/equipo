@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import "./Formulario.css";
-import CampoTexto from "../CampoTexto"
+import Campo from "../Campo"
 import ListaOpciones from "../ListaDeOpciones"
 import Boton from "../Boton";
 
@@ -12,7 +12,10 @@ const  Formulario = (props) => {
     const [foto, actualizarFoto] = useState  ("")
     const [equipo, actualizarEquipo] = useState("")
 
-    const {registrarColaborador} = props
+    const [titulo, actualizarTitulo] = useState("")
+    const [color, actualizarColor] = useState("")
+
+    const {registrarColaborador, crearEquipo} = props
 
     const manejarEnvio  = (e) =>{ 
         e.preventDefault()
@@ -28,16 +31,27 @@ const  Formulario = (props) => {
 
     }
 
+    const manejarNuevoEquipo = (e) => {
+        e.preventDefault ()
+        crearEquipo({titulo, colorPrimario:color});
+    }
+
     return (
        
         <section className="formulario">
             <form onSubmit = {manejarEnvio} > 
                 <h2> Rellena el formulario para crear el colaborador.</h2>
-                <CampoTexto titulo="Nombre" placeholder="Ingresa nombre completo" required valor={nombre} actualizarValor={actualizarNombre}/>
-                <CampoTexto titulo="Puesto" placeholder="Escribe tu puesto" required  valor={puesto} actualizarValor={actualizarPuesto}/>
-                <CampoTexto titulo="Foto" placeholder="URL de la imagen" required  valor={foto} actualizarValor={actualizarFoto}/>
+                <Campo titulo="Nombre" placeholder="Ingresa nombre completo" required valor={nombre} actualizarValor={actualizarNombre}/>
+                <Campo titulo="Puesto" placeholder="Escribe tu puesto" required  valor={puesto} actualizarValor={actualizarPuesto}/>
+                <Campo titulo="Foto" placeholder="URL de la imagen" required  valor={foto} actualizarValor={actualizarFoto}/>
                 <ListaOpciones valor={equipo} actualizarEquipo={actualizarEquipo}  equipos={props.equipos}/>
                 <Boton texto="Crear"/>
+            </form>
+            <form onSubmit = {manejarNuevoEquipo} > 
+                <h2> Rellena el formulario para crear el colaborador.</h2>
+                <Campo titulo="Titulo" placeholder="Ingresa titulo" required valor={titulo} actualizarValor={actualizarTitulo}/>
+                <Campo titulo="Color" placeholder="Ingresar el color hexagecimal" required  valor={color} actualizarValor={actualizarColor} type="color"/>
+                <Boton texto=" Registrar equipo" /> 
             </form>
         </section>
     )
